@@ -1,4 +1,4 @@
-# web-search-mcp
+# open-search-mcp
 
 An MCP (Model Context Protocol) server that provides web search, page fetching, and combined research capabilities — **no API key required**.
 
@@ -51,15 +51,15 @@ pip install .
 ### As an MCP server (stdio transport)
 
 ```bash
-web-search-mcp
+open-search-mcp
 ```
 
 ### With mcporter
 
 ```bash
-mcporter call web-search.search query="your search" max_results:5
-mcporter call web-search.fetch url="https://example.com"
-mcporter call web-search.research query="deep research topic" fetch_top:3
+mcporter call open-search.search query="your search" max_results:5
+mcporter call open-search.fetch url="https://example.com"
+mcporter call open-search.research query="deep research topic" fetch_top:3
 ```
 
 ### With Claude Desktop / MCP clients
@@ -69,9 +69,9 @@ Add to your MCP config:
 ```json
 {
   "mcpServers": {
-    "web-search": {
+    "open-search": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/web-search-mcp", "web-search-mcp"]
+      "args": ["run", "--directory", "/path/to/open-search-mcp", "open-search-mcp"]
     }
   }
 }

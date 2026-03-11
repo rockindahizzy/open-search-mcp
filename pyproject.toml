@@ -1,5 +1,5 @@
 [project]
-name = "web-search-mcp"
+name = "open-search-mcp"
 version = "0.1.0"
 description = "Keyless MCP server for web search, fetch, and research via DuckDuckGo + Trafilatura"
 requires-python = ">=3.11"
@@ -31,9 +31,9 @@ dependencies = [
 web-search-mcp = "web_search_mcp.server:main"
 
 [project.urls]
-Homepage = "https://github.com/rockindahizzy/web-search-mcp"
-Repository = "https://github.com/rockindahizzy/web-search-mcp"
-Issues = "https://github.com/rockindahizzy/web-search-mcp/issues"
+Homepage = "https://github.com/rockindahizzy/open-search-mcp"
+Repository = "https://github.com/rockindahizzy/open-search-mcp"
+Issues = "https://github.com/rockindahizzy/open-search-mcp/issues"
 
 [build-system]
 requires = ["hatchling"]
