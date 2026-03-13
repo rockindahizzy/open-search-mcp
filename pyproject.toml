@@ -25,15 +25,20 @@ dependencies = [
     "ddgs>=8.0.0",
     "httpx>=0.27.0",
     "trafilatura>=2.0.0",
+    "click>=8.1.0",
 ]
 
 [project.scripts]
 web-search-mcp = "web_search_mcp.server:main"
+open-search = "web_search_mcp.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/rockindahizzy/open-search-mcp"
 Repository = "https://github.com/rockindahizzy/open-search-mcp"
 Issues = "https://github.com/rockindahizzy/open-search-mcp/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/web_search_mcp"]
 
 [build-system]
 requires = ["hatchling"]

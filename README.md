@@ -1,96 +1,108 @@
 # open-search-mcp
 
-An MCP (Model Context Protocol) server that provides web search, page fetching, and combined research capabilities — **no API key required**.
+Web search, page fetching, and research from the terminal or any MCP client — **no API key required**.
 
 Built on DuckDuckGo for search and Trafilatura for content extraction.
 
-## Tools
+## Install
 
-### `search`
-Search the web via DuckDuckGo with support for advanced query operators.
-
-```
-query: "react native expo" -reddit
-max_results: 10
-region: us-en
-time_range: w        # d=day, w=week, m=month, y=year
-site: github.com     # limit to domain
-```
-
-### `fetch`
-Fetch a URL and extract clean, readable text from HTML.
-
-```
-url: https://example.com/article
-max_chars: 20000
-```
-
-### `research`
-Combined search + fetch — searches the web, then auto-fetches the top N results for full content extraction. Best for deep dives.
-
-```
-query: "philosophy of mind" AI consciousness
-fetch_top: 3
-max_chars_per_page: 10000
-```
-
-## Installation
-
-Requires Python 3.11+.
+### Homebrew (macOS/Linux)
 
 ```bash
-# With uv
-uv sync
-
-# Or with pip
-pip install .
+brew install rockindahizzy/tap/open-search-mcp
 ```
 
-## Usage
+### pipx / uv
 
-### As an MCP server (stdio transport)
+```bash
+# One-shot (no install)
+uvx open-search-mcp search "your query"
+
+# Permanent install
+uv tool install open-search-mcp
+# or
+pipx install open-search-mcp
+```
+
+### pip
+
+```bash
+pip install open-search-mcp
+```
+
+## CLI Usage
+
+```bash
+# Search the web
+open-search search "python async tutorial"
+open-search search "react native" -n 5 -t w
+open-search search "security CVE" -s github.com
+
+# Fetch a page and extract readable content
+open-search fetch https://example.com/article
+open-search fetch https://news.ycombinator.com -m 5000
+
+# Research: search + auto-fetch top results
+open-search research "philosophy of mind AI"
+open-search research "rust vs go 2025" -f 5 -v
+
+# JSON output (pipe to jq, etc.)
+open-search search "AI agents" --json
+open-search research "MCP protocol" --json | jq '.results[0].content'
+```
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `search` | Search the web via DuckDuckGo |
+| `fetch` | Fetch a URL → clean readable text |
+| `research` | Search + auto-fetch top N results |
+
+### Query Tips
+
+- Exact phrases: `"financial literacy"`
+- Exclude terms: `-pinterest`
+- Site filter: `-s github.com` or `site:stackoverflow.com` in query
+- Time range: `-t d` (day), `-t w` (week), `-t m` (month), `-t y` (year)
+- Combine: `"react native" expo -reddit`
+
+## MCP Server Usage
+
+The package also runs as an MCP server for AI assistants and agents.
+
+### As stdio server
 
 ```bash
 open-search-mcp
 ```
 
-### With mcporter
-
-```bash
-mcporter call open-search.search query="your search" max_results:5
-mcporter call open-search.fetch url="https://example.com"
-mcporter call open-search.research query="deep research topic" fetch_top:3
-```
-
 ### With Claude Desktop / MCP clients
-
-Add to your MCP config:
 
 ```json
 {
   "mcpServers": {
     "open-search": {
-      "command": "uv",
-      "args": ["run", "--directory", "/path/to/open-search-mcp", "open-search-mcp"]
+      "command": "uvx",
+      "args": ["open-search-mcp"]
     }
   }
 }
 ```
 
-## Query Tips
+### MCP Tools
 
-- Exact phrases: `"financial literacy"`
-- Exclude terms: `-pinterest`
-- Site filter: `site:stackoverflow.com`
-- Combine: `"react native" expo -reddit site:github.com`
-- Time range: Use `time_range` param for freshness (`d`, `w`, `m`, `y`)
+- **`search`** — Web search with filters (region, time, site)
+- **`fetch`** — URL → clean text extraction
+- **`research`** — Search + auto-fetch combined
 
 ## Dependencies
 
-- [mcp](https://github.com/modelcontextprotocol/python-sdk) — Model Context Protocol SDK
+- [click](https://click.palletsprojects.com/) — CLI framework
 - [ddgs](https://github.com/deedy5/duckduckgo_search) — DuckDuckGo search
 - [httpx](https://github.com/encode/httpx) — HTTP client
 - [trafilatura](https://github.com/adbar/trafilatura) — Web content extraction
+- [mcp](https://github.com/modelcontextprotocol/python-sdk) — Model Context Protocol SDK
 
 ## License
 
