@@ -1,0 +1,12 @@
+# Adds the open-search tools (open_search, open_fetch, open_research) to the
+# profile. Override `command` in your profile's cordis.patch.yml if the
+# open-search CLI is not on PATH or in ~/.local/bin, /opt/homebrew/bin, or
+# /usr/local/bin, e.g.:
+#
+#   - id: open-search
+#     config:
+#       command: /path/to/open-search
+
+- insert:
+    - id: open-search
+      name: 'dsh-plugin-open-search'

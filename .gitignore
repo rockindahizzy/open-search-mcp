@@ -9,3 +9,7 @@ wheels/
 # Virtual environments
 .venv
 dist/
+
+# DeepSeek Harness plugin
+node_modules/
+dsh-plugin/lib/
